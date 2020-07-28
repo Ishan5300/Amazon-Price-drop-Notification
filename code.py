@@ -14,7 +14,6 @@ prod_df=pd.read_csv(r"G:\Projects Python\Amazon Scrapper\itemlist.csv",encoding=
 prod_urls=prod_df.URLs
 expected_price=prod_df.threshold
 prod_name=prod_df.Code
-#print(len(prod_urls))
 def check_price():
     list_url=[]
     list_item=[]
@@ -36,20 +35,20 @@ def check_price():
             if((price!=0) and (price<expected_price[i])):
                 list_item.append(prod_name[i])
                 list_url.append(prod_urls[i])
-                #print("phhhh")
-        sleep(2)
+               
+        sleep(5)
     send_mail(list_url,list_item)
 def send_mail(item_url,item_name):
     server=smtplib.SMTP('smtp.gmail.com',587)
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login('projecttryout27@gmail.com','altttqvlfwstzgbe')
+    server.login('sendermail@gmail.com','password')
     message = MIMEMultipart("alternative")
     message["Subject"]="Price is Down"
     message["Body"]='Check the link'
-    message["FROM"]="projecttryout27@gmail.com"
-    message["TO"]="ishan.22770@gmail.com"
+    message["FROM"]="sendermail@gmail.com"
+    message["TO"]="receivermail@gmail.com"
     text="""\
     Check out these links
     """
@@ -74,8 +73,8 @@ def send_mail(item_url,item_name):
     message.attach(part2)
     try:
         server.sendmail(
-        'projecttryout27@gmail.com',
-        'ishan.22770@gmail.com',
+        'sendermail@gmail.com',
+        'receivermail@gmail',
         message.as_string()
         )
         print("mail sent")
